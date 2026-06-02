@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:cc="jakarta.faces.composite">
+
+<cc:interface>
+    <!--
+        value      : リンクテキスト（必須）
+        outcome    : 遷移先ビュー名（必須）
+        styleClass : 追加 CSS クラス（任意）
+    -->
+    <cc:attribute name="value"
+                  type="java.lang.String"
+                  required="true" />
+    <cc:attribute name="outcome"
+                  type="java.lang.String"
+                  required="true" />
+    <cc:attribute name="styleClass"
+                  type="java.lang.String"
+                  default="" />
+</cc:interface>
+
+<cc:implementation>
+    <h:link id="lnk"
+            value="#{cc.attrs.value}"
+            outcome="#{cc.attrs.outcome}"
+            styleClass="dads-link #{cc.attrs.styleClass}" />
+</cc:implementation>
+
+</html>

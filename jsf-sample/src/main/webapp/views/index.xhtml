@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html"
-      xmlns:pt="jakarta.faces.passthrough"
+      xmlns:dads="jakarta.faces.composite/dads"
       lang="ja">
 <h:head>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="#{request.contextPath}/css/dads.css" />
+    <h:outputStylesheet library="css" name="dads.css" />
 </h:head>
 <h:body>
 <div class="page-container">
@@ -17,18 +17,13 @@
     <h1 class="dads-heading" data-size="28" data-rule="4">JSF サンプル</h1>
 
     <h:form styleClass="form-actions">
-        <!--
-            dads:button は action に method-signature を要求するため、
-            リテラルナビゲーション結果 "register" には h:commandButton を直接使う
-        -->
-        <h:commandButton value="ユーザー登録フォームへ"
-                         action="register"
-                         styleClass="dads-button"
-                         pt:data-type="solid-fill"
-                         pt:data-size="lg" />
+        <dads:button value="ユーザー登録フォームへ"
+                     outcome="register"
+                     buttonType="solid-fill"
+                     size="lg" />
     </h:form>
 
-    <p><h:link value="登録済みユーザー一覧" outcome="list" /></p>
+    <p><dads:link value="登録済みユーザー一覧" outcome="list" /></p>
 
 </div>
 </h:body>

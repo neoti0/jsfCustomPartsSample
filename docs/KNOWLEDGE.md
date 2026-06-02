@@ -94,7 +94,25 @@ composite component 経由では同じ挙動にならない。
                  pt:data-size="lg" />
 ```
 
-**適用ルール**: `dads:button` の `action` には必ず EL 式（`#{bean.method}` 形式）を渡すこと。
+**適用ルール（フェーズ7まで）**: `dads:button` の `action` には必ず EL 式（`#{bean.method}` 形式）を渡すこと。
+フェーズ8で `outcome` 属性を追加し、リテラル遷移先は `outcome="register"` で指定可能になった。
+
+---
+
+## dads-components jar のコンポーネントが jsf-sample に反映されない
+
+**問題**: `dads-components` に新しいコンポーネント（例: `link.xhtml`）を追加しても、
+jsf-sample で `<dads:link>` を使うと「no tag was defined for name: link」エラーになる。
+
+**原因**: jsf-sample の `pom.xml` に `dads-components` 依存が未追加のため、
+JSF は `dads-components` jar ではなく `jsf-sample/src/main/webapp/resources/dads/` をコンポーネントの解決先として使っている。
+ローカルの `resources/dads/` に該当ファイルがなければ「未定義のタグ」になる。
+
+**現状の対処（フェーズ7完了前）**: `dads-components` の XHTML ファイルを
+`jsf-sample/src/main/webapp/resources/dads/` にも同期コピーして両方に持つ。
+
+**恒久対応**: フェーズ7の残課題（jsf-sample pom.xml に依存追加 / ローカル resources/dads/ 削除）を完了させれば
+dads-components jar 単体からコンポーネントが解決されるようになる。
 
 ---
 

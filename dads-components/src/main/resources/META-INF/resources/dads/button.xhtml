@@ -9,7 +9,8 @@
 <cc:interface>
     <!--
         value       : ボタンに表示するラベルテキスト（必須）
-        action      : アクションメソッド（例: #{userBean.register}）
+        action      : アクションメソッド（例: #{bean.method}）。outcome と排他。action を優先
+        outcome     : リテラル遷移先（例: "register"）。action 未指定時に使用
         buttonType  : DADS ボタン種別  solid-fill（デフォルト）/ outline / text
         size        : DADS ボタンサイズ xs / sm / md（デフォルト）/ lg
         disabled    : 非活性フラグ
@@ -25,6 +26,9 @@
                   required="true" />
     <cc:attribute name="action"
                   method-signature="java.lang.String action()"
+                  required="false" />
+    <cc:attribute name="outcome"
+                  type="java.lang.String"
                   required="false" />
     <cc:attribute name="buttonType"
                   type="java.lang.String"
@@ -44,10 +48,12 @@
 </cc:interface>
 
 <cc:implementation>
+    <!-- action（MethodExpression）が指定されている場合 -->
     <h:commandButton id="btn"
                      value="#{cc.attrs.value}"
                      action="#{cc.attrs.action}"
                      disabled="#{cc.attrs.disabled}"
+                     rendered="#{not empty cc.attrs.action}"
                      styleClass="dads-button"
                      pt:data-type="#{cc.attrs.buttonType}"
                      pt:data-size="#{cc.attrs.size}">
@@ -58,6 +64,17 @@
         <f:ajax execute="#{empty cc.attrs.ajaxExecute ? '@this' : cc.attrs.ajaxExecute}"
                 render="#{cc.attrs.ajaxRender}"
                 disabled="#{empty cc.attrs.ajaxExecute}" />
+    </h:commandButton>
+    <!-- outcome（リテラル遷移先）のみ指定されている場合 -->
+    <h:commandButton id="btn-o"
+                     value="#{cc.attrs.value}"
+                     action="#{cc.attrs.outcome}"
+                     disabled="#{cc.attrs.disabled}"
+                     rendered="#{empty cc.attrs.action}"
+                     styleClass="dads-button"
+                     pt:data-type="#{cc.attrs.buttonType}"
+                     pt:data-size="#{cc.attrs.size}">
+        <f:ajax disabled="true" />
     </h:commandButton>
 </cc:implementation>
 

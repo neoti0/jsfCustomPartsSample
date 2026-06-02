@@ -1,9 +1,14 @@
 # --- Stage 1: Build ---
 FROM maven:3.9-eclipse-temurin-21 AS builder
 WORKDIR /build
+# 親 pom.xml と各モジュールの pom.xml を先にコピーして依存をキャッシュ
 COPY pom.xml .
+COPY dads-components/pom.xml dads-components/pom.xml
+COPY jsf-sample/pom.xml jsf-sample/pom.xml
 RUN mvn dependency:go-offline -q
-COPY src ./src
+# ソースをコピーしてビルド
+COPY dads-components/src dads-components/src
+COPY jsf-sample/src jsf-sample/src
 RUN mvn clean package -q
 
 # --- Stage 2: Runtime ---
@@ -27,7 +32,7 @@ RUN apt-get update && apt-get install -y curl locales && \
     mv /opt/wildfly-${WILDFLY_VERSION} ${WILDFLY_HOME} && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /build/target/jsf-sample.war ${WILDFLY_HOME}/standalone/deployments/
+COPY --from=builder /build/jsf-sample/target/jsf-sample.war ${WILDFLY_HOME}/standalone/deployments/
 
 EXPOSE 8080 9990
 
