@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="jakarta.faces.composite">
+
+<cc:interface>
+    <!--
+        wide : true のとき page-container--wide（横幅を広げたレイアウト）を使用する
+    -->
+    <cc:attribute name="wide"
+                  type="java.lang.Boolean"
+                  default="false" />
+</cc:interface>
+
+<cc:implementation>
+    <div class="page-container#{cc.attrs.wide ? '--wide' : ''}">
+        <cc:insertChildren />
+    </div>
+</cc:implementation>
+
+</html>

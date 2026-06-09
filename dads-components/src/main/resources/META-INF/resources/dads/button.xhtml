@@ -68,7 +68,7 @@
     <!-- outcome（リテラル遷移先）のみ指定されている場合 -->
     <h:commandButton id="btn-o"
                      value="#{cc.attrs.value}"
-                     action="#{cc.attrs.outcome}"
+                     action="#{dadsNavigator.to(cc.attrs.outcome)}"
                      disabled="#{cc.attrs.disabled}"
                      rendered="#{empty cc.attrs.action}"
                      styleClass="dads-button"

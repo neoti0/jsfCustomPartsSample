@@ -228,6 +228,73 @@ public class RegisterConfirmBacking {
 
 ---
 
+## 画面開発共通規約
+
+### 1. 3層構造原則（ミルフィーユパターン）
+
+| 層 | クラス種別 | 責務 | スコープ |
+|---|---|---|---|
+| View | XHTML | レイアウト・表示のみ | — |
+| UI制御 | Backing Bean | 画面イベント・インフラ呼出・フロー制御。業務データは持たない | `@RequestScoped` |
+| データ | Flow Data Bean | データ保持 + BV アノテーション。ロジックは持たない | `@FlowScoped` |
+
+クラスの詳細は「クラス設計 → 責務分割方針」参照。
+
+---
+
+### 2. 初期表示イベント（`f:viewAction`）
+
+画面表示時の初期処理は `f:viewAction` で対応 Backing Bean の `init()` を明示呼出する。
+
+```xml
+<f:metadata>
+    <f:viewAction action="#{registerConfirmBacking.init()}" />
+</f:metadata>
+<ui:composition template="...">
+    ...
+</ui:composition>
+```
+
+**配置制約**: `f:metadata` は `<ui:composition>` の**外側（ファイルルート直下）**に記述する（Facelets の制約）。
+
+---
+
+### 3. ボタン action マッピング原則
+
+- `action` 属性には**現在の画面の Backing Bean** のメソッドのみを指定する
+- 遷移先画面の Bean のメソッドを直接指定することは禁止（ライフサイクルの混乱・結合度の悪化を招く）
+
+---
+
+### 4. フォワード / リダイレクト遷移規約
+
+| ケース | 方式 | 実装例 |
+|---|---|---|
+| 同一フロー内（入力 ↔ 確認） | フォワード | `return "register-confirm"` |
+| フロー脱出（完了 → 一覧） | リダイレクト（PRG） | `return "/views/list?faces-redirect=true"` |
+
+リダイレクトの理由:
+- F5 キーによる処理の二重実行を URL 正常化で防止する
+- `@FlowScoped` のメモリを JSF コンテナに確実に解放させる
+
+---
+
+### 5. Facelets テンプレート（`dads:pageContainer`）
+
+テンプレートは `dads-components` が提供する（`META-INF/resources/dads/pageContainer.xhtml`）。
+
+| スロット（`ui:insert`） | 内容 |
+|---|---|
+| `title` | ページタイトル |
+| `content` | メインコンテンツ |
+| `headScripts` | `<head>` 内の追加スクリプト・スタイル |
+| `bodyScripts` | `</body>` 直前の追加スクリプト |
+
+共通ロード（Google Fonts・`dads.css`）はテンプレート内に集約する。  
+個別画面は `<ui:composition>` でテンプレートを参照し、`<ui:define>` でスロットに差し込む。
+
+---
+
 ## 複合コンポーネント仕様
 
 ### 既存

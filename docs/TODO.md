@@ -106,6 +106,24 @@
 
 ---
 
+### フェーズ9: 画面共通規約の適用
+
+#### Facelets テンプレート整備（dads-components）
+- [ ] `dads-components/src/main/resources/META-INF/resources/dads/pageContainer.xhtml` を整備
+  - [ ] スロット定義: `title` / `content` / `headScripts` / `bodyScripts`
+  - [ ] 共通ロード（Google Fonts・`dads.css`）をテンプレートに集約
+- [ ] 各 XHTML（index / list / register-input / register-confirm / register-complete）を `pageContainer` でテンプレート統合
+
+#### `f:viewAction` 適用
+- [ ] 各 XHTML のルート直下（`<ui:composition>` の外）に `<f:metadata>` + `<f:viewAction>` を追加
+- [ ] 各 Backing Bean に `init()` メソッドを追加（`@PostConstruct` で代替している場合は移行）
+
+#### 遷移規約確認・修正
+- [ ] フロー内遷移がフォワード（文字列返却）になっていることを確認
+- [ ] フロー脱出（完了 → 一覧）が `?faces-redirect=true` 付きになっていることを確認・修正
+
+---
+
 ## 将来対応（優先度低）
 
 - [ ] データ永続化（JPA + H2 または PostgreSQL）

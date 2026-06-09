@@ -81,3 +81,5 @@ META-INF/
 | `dads:outputField` | `label` / `value` | 確認画面用ラベル＋値の読み取り専用表示 |
 | `dads:table` | `headers` / `rows` | DADS スタイルテーブル |
 | `dads:illustration` | `src` / `alt` / `size` | イラスト表示（画像パスは利用側が指定） |
+| `dads:pageContainer` | `wide`（Boolean, default false） | ページ外枠 div のラッパー。wide=true で `page-container--wide` クラスを使用 |
+| `dads:link` | `value` / `outcome` / `styleClass` | DADS スタイルのナビゲーションリンク |
