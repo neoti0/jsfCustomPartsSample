@@ -8,20 +8,15 @@ import jakarta.inject.Named;
 @RequestScoped
 public class RegisterInputBacking {
 
-    public String confirm() {
-        return "register-confirm";
-    }
-
-    /**
-     * フロー外からの直接 URL アクセスを弾く。
-     * f:viewAction(onPostback="false") から呼び出す。
-     * Flow が未開始なら index へリダイレクト。
-     */
-    public String guardFlow() {
+    public String init() {
         FacesContext ctx = FacesContext.getCurrentInstance();
         if (ctx.getApplication().getFlowHandler().getCurrentFlow(ctx) == null) {
             return "/views/index?faces-redirect=true";
         }
         return null;
+    }
+
+    public String confirm() {
+        return "register-confirm";
     }
 }

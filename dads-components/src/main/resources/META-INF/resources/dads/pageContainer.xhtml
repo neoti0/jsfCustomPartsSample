@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
       xmlns:cc="jakarta.faces.composite">
 
 <cc:interface>
     <!--
-        wide : true のとき page-container--wide（横幅を広げたレイアウト）を使用する
+        title : ページ見出し（h1 として描画）。省略時は見出しなし
+        wide  : true のとき page-container--wide（横幅を広げたレイアウト）を使用する
     -->
+    <cc:attribute name="title"
+                  type="java.lang.String"
+                  default="" />
     <cc:attribute name="wide"
                   type="java.lang.Boolean"
                   default="false" />
 </cc:interface>
 
 <cc:implementation>
+    <h:outputStylesheet library="css" name="dads.css" />
     <div class="page-container#{cc.attrs.wide ? '--wide' : ''}">
+        <ui:fragment rendered="#{not empty cc.attrs.title}">
+            <h1 class="dads-heading" data-size="28" data-rule="4">#{cc.attrs.title}</h1>
+        </ui:fragment>
         <cc:insertChildren />
     </div>
 </cc:implementation>

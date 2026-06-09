@@ -91,36 +91,37 @@
 
 ## 次フェーズ
 
-### フェーズ8: DADSコンポーネント追加・修正
+### フェーズ8: DADSコンポーネント追加・修正 ✅
 
 #### dads:button 修正（`action` / `outcome` 属性分離）
-- [ ] `cc:attribute name="outcome" type="java.lang.String"` を追加
-- [ ] `h:commandButton` の `action` を `action` / `outcome` の条件分岐に対応
-- [ ] 呼び出し元 XHTML のリテラル指定箇所を `outcome` に変更
-- [ ] 動作確認（EL式・リテラル両方で遷移できること）
+- [x] `cc:attribute name="outcome" type="java.lang.String"` を追加
+- [x] `h:commandButton` の `action` を `action` / `outcome` の条件分岐に対応（`DadsNavigator.to()` 経由）
+- [x] 呼び出し元 XHTML のリテラル指定箇所を `outcome` に変更
+- [x] 動作確認（EL式・リテラル両方で遷移できること）
 
 #### dads:link 新規作成（GET ナビゲーション）
-- [ ] `resources/dads/link.xhtml` 作成（`h:link` の DADS コンポーネント）
-  - [ ] 属性: `value`（String、必須）、`outcome`（String、必須）、`styleClass`（String、任意）
-- [ ] 呼び出し元 XHTML の `h:link` を `dads:link` に置き換え
+- [x] `resources/dads/link.xhtml` 作成（`h:link` の DADS コンポーネント）
+  - [x] 属性: `value`（String、必須）、`outcome`（String、必須）、`styleClass`（String、任意）
+- [x] 呼び出し元 XHTML の `h:link` を `dads:link` に置き換え
 
 ---
 
-### フェーズ9: 画面共通規約の適用
+### フェーズ9: 画面共通規約の適用 ✅
 
 #### Facelets テンプレート整備（dads-components）
-- [ ] `dads-components/src/main/resources/META-INF/resources/dads/pageContainer.xhtml` を整備
-  - [ ] スロット定義: `title` / `content` / `headScripts` / `bodyScripts`
-  - [ ] 共通ロード（Google Fonts・`dads.css`）をテンプレートに集約
-- [ ] 各 XHTML（index / list / register-input / register-confirm / register-complete）を `pageContainer` でテンプレート統合
+- [x] `dads-components/src/main/resources/META-INF/resources/dads/pageContainer.xhtml` を整備
+  - [x] `title` 属性（String）を追加（h1 見出しとして描画）
+  - [x] `h:outputStylesheet library="css" name="dads.css"` を追加（共通 CSS を集約）
+- [x] 各 XHTML（index / list / register-input / register-confirm / register-complete）を `dads:pageContainer` でテンプレート統合・h1 を title 属性に移行
 
 #### `f:viewAction` 適用
-- [ ] 各 XHTML のルート直下（`<ui:composition>` の外）に `<f:metadata>` + `<f:viewAction>` を追加
-- [ ] 各 Backing Bean に `init()` メソッドを追加（`@PostConstruct` で代替している場合は移行）
+- [x] 各 XHTML のルート直下（`<h:head>` より前）に `<f:metadata>` + `<f:viewAction>` を配置
+- [x] 各 Backing Bean に `init()` メソッドを追加（RegisterInputBacking: `guardFlow` → `init` へリネーム、RegisterConfirmBacking / RegisterCompleteBacking: `init()` 新規追加）
+- [x] confirm・complete ページが RegisterInputBacking の `guardFlow` を呼んでいた誤りを修正（各自の Backing Bean の `init()` を呼ぶよう変更）
 
 #### 遷移規約確認・修正
-- [ ] フロー内遷移がフォワード（文字列返却）になっていることを確認
-- [ ] フロー脱出（完了 → 一覧）が `?faces-redirect=true` 付きになっていることを確認・修正
+- [x] フロー内遷移がフォワード（文字列返却）になっていることを確認
+- [x] フロー脱出（完了 → 一覧）が `faces-config.xml` の `flow-return` 経由で `?faces-redirect=true` 付きになっていることを確認
 
 ---
 

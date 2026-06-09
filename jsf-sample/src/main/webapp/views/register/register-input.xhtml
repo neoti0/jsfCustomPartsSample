@@ -5,8 +5,7 @@
       xmlns:dads="jakarta.faces.composite/dads"
       lang="ja">
 <f:metadata>
-    <!-- GET でフロー外からアクセスされた場合は index へ戻す -->
-    <f:viewAction action="#{registerInputBacking.guardFlow}" onPostback="false" />
+    <f:viewAction action="#{registerInputBacking.init}" onPostback="false" />
 </f:metadata>
 <h:head>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -14,12 +13,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&amp;display=swap" rel="stylesheet" />
-    <h:outputStylesheet library="css" name="dads.css" />
 </h:head>
 <h:body>
-<div class="page-container">
-
-    <h1 class="dads-heading" data-size="28" data-rule="4">ユーザー登録</h1>
+<dads:pageContainer title="ユーザー登録">
 
     <h:form id="registerForm" acceptcharset="UTF-8">
 
@@ -57,6 +53,6 @@
 
     </h:form>
 
-</div>
+</dads:pageContainer>
 </h:body>
 </html>

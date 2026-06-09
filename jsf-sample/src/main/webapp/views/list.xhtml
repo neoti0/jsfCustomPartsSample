@@ -9,12 +9,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&amp;display=swap" rel="stylesheet" />
-    <h:outputStylesheet library="css" name="dads.css" />
 </h:head>
 <h:body>
-<dads:pageContainer wide="true">
-
-    <h1 class="dads-heading" data-size="28" data-rule="4">登録済みユーザー一覧</h1>
+<dads:pageContainer wide="true" title="登録済みユーザー一覧">
 
     <h:panelGroup rendered="#{empty userListBacking.tableRows}">
         <p>登録済みユーザーはいません。</p>

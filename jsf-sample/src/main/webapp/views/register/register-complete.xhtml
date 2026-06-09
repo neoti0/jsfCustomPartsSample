@@ -5,7 +5,7 @@
       xmlns:dads="jakarta.faces.composite/dads"
       lang="ja">
 <f:metadata>
-    <f:viewAction action="#{registerInputBacking.guardFlow}" onPostback="false" />
+    <f:viewAction action="#{registerCompleteBacking.init}" onPostback="false" />
 </f:metadata>
 <h:head>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -13,12 +13,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&amp;display=swap" rel="stylesheet" />
-    <h:outputStylesheet library="css" name="dads.css" />
 </h:head>
 <h:body>
-<div class="page-container">
-
-    <h1 class="dads-heading" data-size="28" data-rule="4">登録完了</h1>
+<dads:pageContainer title="登録完了">
 
     <dads:illustration src="/resources/img/complete.svg"
                        alt="登録完了のイラスト"
@@ -35,6 +32,6 @@
         </div>
     </h:form>
 
-</div>
+</dads:pageContainer>
 </h:body>
 </html>
